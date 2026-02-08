@@ -91,7 +91,18 @@ def internal_error(error):
 # HEALTH CHECK ENDPOINT
 # ========================================
 
-@app.route('/health', methods=['GET'])
+@app.route('/api/health', methods=['GET'])
+def api_health():
+    """
+    API health check endpoint
+    
+    Returns:
+        JSON response with API status
+    """
+    return {'status': 'ok', 'service': 'JobShield-AI'}, 200
+
+
+@app.route('/healthz', methods=['GET'])
 def health_check():
     """
     Health check endpoint to verify API is running
@@ -99,12 +110,7 @@ def health_check():
     Returns:
         JSON response with health status
     """
-    return jsonify({
-        'success': True,
-        'message': 'JobShield AI API is running',
-        'timestamp': datetime.utcnow().isoformat(),
-        'version': '1.0.0'
-    }), 200
+    return {'status': 'healthy'}, 200
 
 
 # ========================================
